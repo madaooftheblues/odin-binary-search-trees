@@ -45,8 +45,61 @@ function prettyPrint(node, prefix = '', isLeft = true) {
     }
 }
 
+function insert(root, data) {
+    if (root === null) return
+
+    if (data < root.data) {
+        if (root.left !== null) return insert(root.left, data)
+
+        const node = Node(data)
+        root.left = node
+        return
+    }
+    if (data > root.data) {
+        if (root.right !== null) return insert(root.right, data)
+
+        const node = Node(data)
+        root.right = node
+        return
+    }
+}
+
+function min(root) {
+    if (root.left === null) return root.data
+
+    return min(root.left)
+}
+
+function deleteItem(root, data) {
+    if (root === null) return root
+
+    if (data < root.data) {
+        root.left = deleteItem(root.left, data)
+    } else if (data > root.data) {
+        root.right = deleteItem(root.right, data)
+    } else {
+        if (root.left === null) return root.right
+
+        if (root.right === null) return root.left
+
+        const nextLargest = min(root.right)
+        root.data = nextLargest
+        root.right = deleteItem(root.right, root.data)
+    }
+
+    return root
+}
+
 function Tree(arr) {
     let root = buildTree(arr)
 
-    return { prettyPrint, root }
+    return { prettyPrint, root, insert, deleteItem, min }
 }
+
+const arr = [1, 2, 3, 4, 12, 14, 5, 20, 22]
+
+const t = Tree(arr)
+
+t.prettyPrint(t.root)
+t.deleteItem(t.root, 5)
+t.prettyPrint(t.root)
