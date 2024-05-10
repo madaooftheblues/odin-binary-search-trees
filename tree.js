@@ -90,10 +90,17 @@ function deleteItem(root, data) {
     return root
 }
 
+function find(root, data) {
+    if (root === null) return root
+    if (root.data === data) return root
+    if (data < root.data) return find(root.left, data)
+    if (data > root.data) return find(root.right, data)
+}
+
 function Tree(arr) {
     let root = buildTree(arr)
 
-    return { prettyPrint, root, insert, deleteItem, min }
+    return { prettyPrint, root, insert, deleteItem, min, find }
 }
 
 const arr = [1, 2, 3, 4, 12, 14, 5, 20, 22]
