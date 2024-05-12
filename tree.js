@@ -137,23 +137,44 @@ function levelOrderRec(root, callback) {
     if (!callback) return values
 }
 
-function inOrder(root, callback) {
-    const values = []
+function dfs(root, order, callback) {
+    if (root === null) return
 
-    function dfs(root, callback) {
-        if (root === null) return
+    if (order === 'pre') callback(root)
 
-        dfs(root.left, callback)
+    dfs(root.left, order, callback)
 
-        if (callback) callback(root)
-        else values.push(root.data)
+    if (order === 'in') callback(root)
 
-        dfs(root.right, callback)
+    dfs(root.right, order, callback)
+
+    if (order === 'post') callback(root)
+}
+
+function dfsBuilder(order) {
+    return function (root, callback) {
+        const values = []
+        const call = (node) => {
+            if (callback) callback(node)
+            else values.push(node.data)
+        }
+
+        dfs(root, order, call)
+
+        if (!callback) return values
     }
+}
 
-    dfs(root, callback)
+function inOrder(root, callback) {
+    return dfsBuilder('in')(root, callback)
+}
 
-    if (!callback) return values
+function preOrder(root, callback) {
+    return dfsBuilder('pre')(root, callback)
+}
+
+function postOrder(root, callback) {
+    return dfsBuilder('post')(root, callback)
 }
 
 function Tree(arr) {
@@ -169,4 +190,4 @@ const t = Tree(arr)
 prettyPrint(t.root)
 deleteItem(t.root, 5)
 prettyPrint(t.root)
-console.log(inOrder(t.root))
+console.log(preOrder(t.root))
