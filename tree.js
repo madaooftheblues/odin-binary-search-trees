@@ -97,6 +97,25 @@ function find(root, data) {
     if (data > root.data) return find(root.right, data)
 }
 
+function levelOrder(root, callback) {
+    if (root === null) return
+
+    const frontier = [root]
+    const values = []
+
+    while (frontier.length !== 0) {
+        const node = frontier.shift()
+
+        if (callback) callback(node)
+        else values.push(node.data)
+
+        if (node.left) frontier.push(node.left)
+        if (node.right) frontier.push(node.right)
+    }
+
+    if (!callbakck) return values
+}
+
 function Tree(arr) {
     let root = buildTree(arr)
 
@@ -107,6 +126,7 @@ const arr = [1, 2, 3, 4, 12, 14, 5, 20, 22]
 
 const t = Tree(arr)
 
-t.prettyPrint(t.root)
-t.deleteItem(t.root, 5)
-t.prettyPrint(t.root)
+prettyPrint(t.root)
+deleteItem(t.root, 5)
+prettyPrint(t.root)
+console.log(levelOrder(t.root))
