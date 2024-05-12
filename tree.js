@@ -137,6 +137,25 @@ function levelOrderRec(root, callback) {
     if (!callback) return values
 }
 
+function inOrder(root, callback) {
+    const values = []
+
+    function dfs(root, callback) {
+        if (root === null) return
+
+        dfs(root.left, callback)
+
+        if (callback) callback(root)
+        else values.push(root.data)
+
+        dfs(root.right, callback)
+    }
+
+    dfs(root, callback)
+
+    if (!callback) return values
+}
+
 function Tree(arr) {
     let root = buildTree(arr)
 
@@ -150,4 +169,4 @@ const t = Tree(arr)
 prettyPrint(t.root)
 deleteItem(t.root, 5)
 prettyPrint(t.root)
-console.log(levelOrderRec(t.root))
+console.log(inOrder(t.root))
