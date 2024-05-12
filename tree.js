@@ -97,7 +97,7 @@ function find(root, data) {
     if (data > root.data) return find(root.right, data)
 }
 
-function levelOrder(root, callback) {
+function levelOrderIter(root, callback) {
     if (root === null) return
 
     const frontier = [root]
@@ -113,7 +113,28 @@ function levelOrder(root, callback) {
         if (node.right) frontier.push(node.right)
     }
 
-    if (!callbakck) return values
+    if (!callback) return values
+}
+
+function levelOrderRec(root, callback) {
+    const values = []
+
+    function bfs(node, frontier, values, callback) {
+        if (node === null) return
+        if (node.left) frontier.push(node.left)
+        if (node.right) frontier.push(node.right)
+
+        if (callback) callback(root)
+        else values.push(node.data)
+
+        if (frontier.length === 0) return
+
+        return bfs(frontier.shift(), frontier, values, callback)
+    }
+
+    bfs(root, [], values, callback)
+
+    if (!callback) return values
 }
 
 function Tree(arr) {
@@ -129,4 +150,4 @@ const t = Tree(arr)
 prettyPrint(t.root)
 deleteItem(t.root, 5)
 prettyPrint(t.root)
-console.log(levelOrder(t.root))
+console.log(levelOrderRec(t.root))
