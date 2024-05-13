@@ -177,6 +177,12 @@ function postOrder(root, callback) {
     return dfsBuilder('post')(root, callback)
 }
 
+function height(root) {
+    if (root === null) return -1
+
+    return Math.max(height(root.left), height(root.right)) + 1
+}
+
 function Tree(arr) {
     let root = buildTree(arr)
 
@@ -188,6 +194,4 @@ const arr = [1, 2, 3, 4, 12, 14, 5, 20, 22]
 const t = Tree(arr)
 
 prettyPrint(t.root)
-deleteItem(t.root, 5)
-prettyPrint(t.root)
-console.log(preOrder(t.root))
+console.log(height(find(t.root, 22)))
