@@ -201,12 +201,13 @@ function isBalanced(root) {
 function Tree(arr) {
     let root = buildTree(arr)
 
-    return { prettyPrint, root, insert, deleteItem, min, find }
+    function rebalance() {
+        if (isBalanced(this.root)) return
+
+        const values = inOrder(this.root)
+
+        this.root = buildTree(values)
+    }
+
+    return { root, rebalance }
 }
-
-const arr = [1, 2, 3, 4, 12, 14, 5, 20, 22]
-
-const t = Tree(arr)
-
-prettyPrint(t.root)
-console.log(isBalanced(t.root))
