@@ -183,6 +183,14 @@ function height(root) {
     return Math.max(height(root.left), height(root.right)) + 1
 }
 
+function depth(root, node) {
+    if (root === null) return -1
+    if (root === node) return 0
+
+    if (node.data < root.data) return depth(root.left, node) + 1
+    if (node.data > root.data) return depth(root.right, node) + 1
+}
+
 function Tree(arr) {
     let root = buildTree(arr)
 
@@ -194,4 +202,4 @@ const arr = [1, 2, 3, 4, 12, 14, 5, 20, 22]
 const t = Tree(arr)
 
 prettyPrint(t.root)
-console.log(height(find(t.root, 22)))
+console.log(depth(t.root, find(t.root, 4)))
