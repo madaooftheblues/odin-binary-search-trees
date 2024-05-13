@@ -191,6 +191,13 @@ function depth(root, node) {
     if (node.data > root.data) return depth(root.right, node) + 1
 }
 
+function isBalanced(root) {
+    const valid = [-1, 0, 1]
+    const diff = height(root.left) - height(root.right)
+
+    return valid.includes(diff)
+}
+
 function Tree(arr) {
     let root = buildTree(arr)
 
@@ -202,4 +209,4 @@ const arr = [1, 2, 3, 4, 12, 14, 5, 20, 22]
 const t = Tree(arr)
 
 prettyPrint(t.root)
-console.log(depth(t.root, find(t.root, 4)))
+console.log(isBalanced(t.root))
