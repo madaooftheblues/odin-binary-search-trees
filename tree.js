@@ -26,13 +26,13 @@ function createBST(arr, start, end) {
     return root
 }
 
-function buildTree(arr) {
+export function buildTree(arr) {
     const processed = processArray(arr)
     const root = createBST(processed, 0, processed.length - 1)
     return root
 }
 
-function prettyPrint(node, prefix = '', isLeft = true) {
+export function prettyPrint(node, prefix = '', isLeft = true) {
     if (node === null) {
         return
     }
@@ -45,7 +45,7 @@ function prettyPrint(node, prefix = '', isLeft = true) {
     }
 }
 
-function insert(root, data) {
+export function insert(root, data) {
     if (root === null) return
 
     if (data < root.data) {
@@ -64,13 +64,13 @@ function insert(root, data) {
     }
 }
 
-function min(root) {
+export function min(root) {
     if (root.left === null) return root.data
 
     return min(root.left)
 }
 
-function deleteItem(root, data) {
+export function deleteItem(root, data) {
     if (root === null) return root
 
     if (data < root.data) {
@@ -90,14 +90,14 @@ function deleteItem(root, data) {
     return root
 }
 
-function find(root, data) {
+export function find(root, data) {
     if (root === null) return root
     if (root.data === data) return root
     if (data < root.data) return find(root.left, data)
     if (data > root.data) return find(root.right, data)
 }
 
-function levelOrderIter(root, callback) {
+export function levelOrder(root, callback) {
     if (root === null) return
 
     const frontier = [root]
@@ -165,25 +165,25 @@ function dfsBuilder(order) {
     }
 }
 
-function inOrder(root, callback) {
+export function inOrder(root, callback) {
     return dfsBuilder('in')(root, callback)
 }
 
-function preOrder(root, callback) {
+export function preOrder(root, callback) {
     return dfsBuilder('pre')(root, callback)
 }
 
-function postOrder(root, callback) {
+export function postOrder(root, callback) {
     return dfsBuilder('post')(root, callback)
 }
 
-function height(root) {
+export function height(root) {
     if (root === null) return -1
 
     return Math.max(height(root.left), height(root.right)) + 1
 }
 
-function depth(root, node) {
+export function depth(root, node) {
     if (root === null) return -1
     if (root === node) return 0
 
@@ -191,14 +191,14 @@ function depth(root, node) {
     if (node.data > root.data) return depth(root.right, node) + 1
 }
 
-function isBalanced(root) {
+export function isBalanced(root) {
     const valid = [-1, 0, 1]
     const diff = height(root.left) - height(root.right)
 
     return valid.includes(diff)
 }
 
-function Tree(arr) {
+export default function Tree(arr) {
     let root = buildTree(arr)
 
     function rebalance() {
